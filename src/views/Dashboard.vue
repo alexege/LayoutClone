@@ -1,7 +1,7 @@
 <script setup>
-import SideNav from "../views/SideNav.vue"
-import SidePanel from "../views/SidePanel.vue"
-import ItemGrid from "../views/ItemGrid.vue"
+import SideNav from "./SideNav.vue"
+import SidePanel from "./SidePanel.vue"
+import ItemGrid from "./ItemGrid.vue"
 </script>
 
 <template>
