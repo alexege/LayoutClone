@@ -13,9 +13,20 @@
   <main>
     <p v-if="loading">Loading posts...</p>
     <p v-if="error">{{ error.message }}</p>
-    <div v-for="post in posts" :key="post.id">
+    <div v-for="(post, idx) in posts" :key="post.id" class="post">
+      <span>{{ idx + 1 }}</span>:
       <RouterLink :to="`/post/${post.id}`">{{ post.title }}</RouterLink>
       <p>{{ post.body }}</p>
     </div>
   </main>
 </template>
+
+<style scoped>
+.post {
+  padding: 1em;
+  margin: 10px;
+  background-color:black;
+  color: lime;
+  outline: 1px solid lime;
+}
+</style>
