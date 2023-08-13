@@ -11,7 +11,10 @@
             </div>
             <div class="search-items">
                 <div class="block" v-for="n in 190" :key="n">
-                    <img :src="'https://source.unsplash.com/random/200x200?sig=' + n" alt="">
+                    <span style="color: black;">
+                        {{  n  }}
+                    </span>
+                    <!-- <img :src="'https://source.unsplash.com/random/200x200?sig=' + n" alt=""> -->
                 </div>
             </div>
         </div>

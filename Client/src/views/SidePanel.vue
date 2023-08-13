@@ -10,10 +10,12 @@
                     +
                 </button>
             </div>
+            
+            <AddItem/>
 
             <div class="items">
                 <span v-for="item in items" :key="item" class="item">
-                    <img :src="'https://source.unsplash.com/random/20x20?sig=' + item" alt="">
+                    <!-- <img :src="'https://source.unsplash.com/random/20x20?sig=' + item" alt=""> -->
                     <span class="layout-title"> - Layout Name</span>
                 </span>
             </div>
@@ -21,10 +23,17 @@
     </div>
 </template>
 <script>
+import AddItem from '../components/AddItem.vue'
+
 export default {
+    components: { AddItem },
     data() {
         return {
-            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            item: {
+                title: null,
+                description: 'Default description'
+            }
         }
     }
 }

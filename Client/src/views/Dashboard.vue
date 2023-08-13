@@ -5,11 +5,13 @@ import ItemGrid from "./ItemGrid.vue"
 </script>
 
 <template>
-  <p class="title">Item Layout</p>
-  <div class="container">
-    <SideNav/>
+  <div>
+    <p class="title">Item Layout</p>
+    <div class="container">
+      <SideNav/>
       <ItemGrid />
-    <SidePanel/>
+      <SidePanel/>
+    </div>
   </div>
 </template>
 

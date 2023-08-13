@@ -1,24 +1,45 @@
-const express = require('express')
-const cors = require('cors')
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-const app = express()
+const app = express();
 
 var corsOptions = {
-    origin: "http://localhost:8081"
-}
-
-const port = 3000
-const bodyParser = require('body-parser');
+  origin: "http://127.0.0.1:8081"
+};
 
 app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/api', (req, res) => {
-  console.log(req.body)
-  res.status(200).json({ result: req.body.text });
-})
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+const db = require("./models");
+const dbConfig = require("./config/db.config");
+db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
+.then(() => {
+  console.log("Successfully connected to Mongodb!");
+})
+.catch(err => {
+  console.error("Connection error", err);
+  process.exit();
+});
+
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Alex's bank layout application." });
+});
+
+//routes
+require('./routes/item.routes')(app);
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});

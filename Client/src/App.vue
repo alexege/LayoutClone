@@ -3,17 +3,20 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-   <header class="navbar">
-    <div>
-      <nav>
-        <RouterLink to="/">Home</RouterLink> - 
-        <RouterLink to="/posts">Posts</RouterLink> - 
-        <RouterLink to="/authors">Authors</RouterLink>
-      </nav>
-    </div>
-  </header> 
-
-  <RouterView />
+  <div>
+    <header class="navbar">
+     <div>
+       <nav>
+         <RouterLink to="/">Home</RouterLink> - 
+         <RouterLink to="/posts">Posts</RouterLink> - 
+         <RouterLink to="/authors">Authors</RouterLink> - 
+         <RouterLink to="/admin">Admin</RouterLink>
+       </nav>
+     </div>
+   </header> 
+ 
+   <RouterView />
+  </div>
 </template>
 
 <style>

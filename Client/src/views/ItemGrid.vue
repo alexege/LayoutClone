@@ -7,6 +7,35 @@
         </div>
     </div>
 </template>
+<script>
+import ItemService from "../services/item.service.js"
+
+export default {
+
+    data() {
+        return {
+            allItems: null
+        }
+    },
+
+    mounted() {
+        this.getAllItems();
+    },
+
+    methods:{
+        getAllItems() {
+            ItemService.findAll()
+            .then(res => {
+                console.log("res:", res);
+                this.allItems = res.data;
+            })
+            .catch(err => {
+                console.log("getAllItems error: ", err);
+            })
+        }
+    }
+}
+</script>
 <style scoped>
 
 .items {
