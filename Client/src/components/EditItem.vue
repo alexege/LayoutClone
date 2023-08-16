@@ -27,64 +27,59 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import ItemService from '../services/item.service';
+import { ref } from "vue";
 
-export default {
-    data() {
-        return {
-            updatedItem: {
-                _id: this.item._id,
-                title: this.item.title,
-                url: this.item.url,
-                description: this.item.description
-            },
-            editing: false,
-        }
-    },
+const updatedItem = ref({
+    _id: props.item._id,
+    title: props.item.title,
+    url: props.item.url,
+    description: props.item.description
+})
 
-    props: [ "item" ],
+const editing = ref(false);
 
-    methods: {
+const props = defineProps(["item"]);
+console.log(props.item);
 
-    toggleEdit() {
-        this.editing = !this.editing;
-    },
-
-    updateItem(item) {
-            console.log("item is:", item);
-            let data = {
-                _id: item._id,
-                title: this.updatedItem.title,
-                url: this.updatedItem.url,
-                description: this.updatedItem.description
-            }
-            console.log("posting update with values:", data);
-            ItemService.update(data)
-            .then(res => {
-                console.log('update:', res);
-            })
-            .catch(err => {
-                console.log("error:", err);
-            })
-            .finally(() => {
-                this.editing = false;
-            })
-            console.log("Updating item");
-        },
-
-        deleteItem(id){
-            console.log("item:", id);
-            ItemService.delete(id)
-            .then(res => {
-                console.log("Deleted item: ", res);
-            })
-            .catch(err => {
-                console.log("error deleteign item: ", err);
-            })
-        }
-    }
+function toggleEdit() {
+    editing.value = !editing.value;
 }
+
+function updateItem(item) {
+    console.log("item is:", item);
+    let data = {
+        _id: item._id,
+        title: updatedItem.value.title,
+        url: updatedItem.value.url,
+        description: updatedItem.value.description
+    }
+    console.log("posting update with values:", data);
+    ItemService.update(data)
+    .then(res => {
+        console.log('update:', res);
+    })
+    .catch(err => {
+        console.log("error:", err);
+    })
+    .finally(() => {
+        editing.value = false;
+    })
+    console.log("Updating item");
+}
+
+function deleteItem(id) {
+    console.log("item:", id);
+    ItemService.delete(id)
+    .then(res => {
+        console.log("Deleted item: ", res);
+    })
+    .catch(err => {
+        console.log("error deleteign item: ", err);
+    })
+}
+
 </script>
 <style scoped>
     .edit-container {
