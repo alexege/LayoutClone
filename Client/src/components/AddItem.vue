@@ -1,8 +1,9 @@
 <template>
-    <div>
-        <div>
-            <input type="text" v-model="item.title">
-            <textarea name="description" cols="30" rows="10" v-model="item.description"></textarea>
+    <div class="container">
+        <div class="item-box">
+            <input type="text" v-model="item.title" placeholder="Title">
+            <input type="text" v-model="item.url" placeholder="URL">
+            <textarea name="description" cols="30" rows="10" v-model="item.description" placeholder="Description"></textarea>
             <button @click="addItem">Add</button>
         </div>
     </div>
@@ -15,6 +16,7 @@ export default {
         return {
             item: {
                 title: '',
+                url: '',
                 description: ''
             }
         }
@@ -30,6 +32,9 @@ export default {
             ItemService.addItem(data)
             .then(res => {
                 console.log("res: ", res);
+                this.item.title = '';
+                this.item.url = '';
+                this.item.description = '';
             })
             .catch(err => {
                 console.log("AddItem.vue error:", err);
@@ -38,3 +43,14 @@ export default {
     }
 }
 </script>
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .item-box {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

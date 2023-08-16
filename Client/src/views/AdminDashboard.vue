@@ -1,9 +1,11 @@
 <template>
     <div class="dashboard">
         <h2>Admin Dashboard</h2>
+        <AddItem/>
         <div class="items">
-            <div v-for="(item, idx) in allItems" :key="item._id" class="block">
-                <template v-if="editItem">
+            <div v-for="item in allItems" :key="item._id" class="block">
+                <EditItem :item="item"/>
+                <!-- <template v-if="editItem">
                     <input type="text" v-model="item.title">
                     <img :src="'https://source.unsplash.com/random/100x100?sig=' + idx" alt="" class="block-image">
                     <input type="text" v-model="item.url">
@@ -15,31 +17,38 @@
                     <img :src="'https://source.unsplash.com/random/100x100?sig=' + idx" alt="" class="block-image">
                     <p>{{ item.description }}</p>
                 </template>
-                
+
                 <div class="action-buttons">
                     <button @click="toggleEdit" v-if="!editItem">Edit</button>
                     <button @click="updateItem(item)" v-else>Update</button>
-                    <button @click="toggleEdit">Cancel</button>
-                </div>
+
+                    <button v-if="editItem" @click="toggleEdit">Cancel</button>
+                    <button v-else @click="deleteItem(item._id)">Delete</button>
+                </div> -->
             </div>
         </div>
     </div>
 </template>
 <script>
 import ItemService from '../services/item.service';
+import AddItem from '../components/AddItem.vue'
+import EditItem from '../components/EditItem.vue'
+
 export default {
     data() {
         return {
             allItems: null,
             editItem: false,
 
-            item: {
+            updatedItem: {
                 title: null,
                 url: null,
                 description: null
             }
         }
     },
+
+    components: { AddItem, EditItem },
 
     mounted() {
         this.getAllItems();
@@ -62,10 +71,12 @@ export default {
         },
 
         updateItem(item) {
+            console.log("item is:", item);
             let data = {
                 _id: item._id,
-                title: this.item.title,
-                description: this.item.description
+                title: this.updatedItem.title,
+                url: this.updatedItem.url,
+                description: this.updatedItem.description
             }
             console.log("posting update with values:", data);
             ItemService.update(data)
@@ -79,6 +90,17 @@ export default {
                 this.editItem = false;
             })
             console.log("Updating item");
+        },
+
+        deleteItem(id){
+            console.log("item:", id);
+            ItemService.delete(id)
+            .then(res => {
+                console.log("Deleted item: ", res);
+            })
+            .catch(err => {
+                console.log("error deleteign item: ", err);
+            })
         }
     }
 }

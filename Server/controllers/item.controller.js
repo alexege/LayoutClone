@@ -6,6 +6,7 @@ exports.addItem = (req, res) => {
     console.log("Adding an item from controller:", req.body);
   const item = new Item({
     title: req.body.title,
+    url: req.body.url,
     description: req.body.description
   });
 
@@ -48,8 +49,10 @@ exports.findOne = (req, res) => {
 // Update a Item by the id in the request
 exports.update = (req, res) => {
   console.log("updating:", req.params);
+  console.log("body:", req.body);
   let updateData = {
     title: req.body.title,
+    url: req.body.url,
     description: req.body.description
   };
 
