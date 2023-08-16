@@ -8,40 +8,35 @@
         </div>
     </div>
 </template>
-<script>
-import ItemService from '../services/item.service.js'
 
-export default {
-    data() {
-        return {
-            item: {
+<script setup>
+import ItemService from '../services/item.service.js';
+import { ref } from "vue";
+
+const  item = ref ({
                 title: '',
                 url: '',
                 description: ''
-            }
-        }
-    },
+            });
 
-    methods: {
-        addItem() {
-            var data = {
-                title: this.item.title,
-                description: this.item.description
+function addItem() {
+    var data = {
+                title: item.value.title,
+                description: item.value.description
             };
 
             ItemService.addItem(data)
             .then(res => {
-                console.log("res: ", res);
-                this.item.title = '';
-                this.item.url = '';
-                this.item.description = '';
+                item.value.title = '';
+                item.value.url = '';
+                item.value.description = '';
+                console.log("result of addItem: ", res);
             })
             .catch(err => {
                 console.log("AddItem.vue error:", err);
             })
-        }
-    }
 }
+
 </script>
 <style>
     .container {

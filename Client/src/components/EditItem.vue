@@ -1,5 +1,7 @@
 <template>
     <div>
+        <div class="edit-container">
+
         <template v-if="editing">
             <input type="text" v-model="updatedItem.title">
             <img :src="'https://source.unsplash.com/random/100x100?sig=' + idx" alt="" class="block-image">
@@ -8,7 +10,7 @@
         </template>
 
         <template v-else>
-            <label for="" value="{{ updatedItem.title }}">{{ updatedItem.title }}</label>
+            <h2>{{ updatedItem.title }}</h2>
             <img :src="'https://source.unsplash.com/random/100x100?sig=100'" alt="" class="block-image">
             <p>{{ updatedItem.description }}</p>
         </template>
@@ -21,7 +23,10 @@
             <button v-else @click="deleteItem(updatedItem._id)">Delete</button>
         </div>
     </div>
+
+    </div>
 </template>
+
 <script>
 import ItemService from '../services/item.service';
 
@@ -82,5 +87,10 @@ export default {
 }
 </script>
 <style scoped>
-
+    .edit-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
