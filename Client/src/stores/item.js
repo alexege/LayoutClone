@@ -8,24 +8,37 @@ export const useItemStore = defineStore({
     loading: false,
     error: null
   }),
-  getters: {
-    getItemsPerAuthor: (state) => {
-      return (authorId) => state.Items.filter((Item) => Item.userId === authorId)
-    }
-  }, 
+//   getters: {
+//     getItemsPerAuthor: (state) => {
+//       return (authorId) => state.Items.filter((Item) => Item.userId === authorId)
+//     }
+//   }, 
   actions: {
     async fetchItems() {
+      console.log("Attempting to fetch all items via pinia")
       this.Items = []
       this.loading = true
       try {
-        this.Items = await fetch('http://127.0.0.1:8081/api/items/all')
+        this.Items = await fetch('http://127.0.0.1:8080/api/items/all')
         .then((response) => response.json()) 
       } catch (error) {
+        console.log("error in pinia:", error)
         this.error = error
       } finally {
         this.loading = false
       }
     },
+
+    createItem(item) {
+        this.Items.push({item})
+    },
+    //Not yet implemented
+    deleteItem(itemId) {
+        this.Items = this.Items.filter((object) => {
+            return object.id !== itemId;
+        });
+    }
+
     // async fetchItem(id) {
     //   this.Item = null
     //   this.loading = true

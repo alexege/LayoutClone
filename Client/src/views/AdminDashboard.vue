@@ -3,28 +3,9 @@
         <h2>Admin Dashboard</h2>
         <AddItem/>
         <div class="items">
-            <div v-for="item in allItems" :key="item._id" class="block">
+            <div v-for="(item, idx) in Items" :key="item._id" class="block">
+                <span>{{ idx + 1 }}</span>
                 <EditItem :item="item"/>
-                <!-- <template v-if="editItem">
-                    <input type="text" v-model="item.title">
-                    <img :src="'https://source.unsplash.com/random/100x100?sig=' + idx" alt="" class="block-image">
-                    <input type="text" v-model="item.url">
-                    <textarea name="" id="" cols="10" rows="10" v-model="item.description"></textarea>
-                </template>
-
-                <template v-else>
-                    <label for="" value="{{ item.title }}">{{ item.title }}</label>
-                    <img :src="'https://source.unsplash.com/random/100x100?sig=' + idx" alt="" class="block-image">
-                    <p>{{ item.description }}</p>
-                </template>
-
-                <div class="action-buttons">
-                    <button @click="toggleEdit" v-if="!editItem">Edit</button>
-                    <button @click="updateItem(item)" v-else>Update</button>
-
-                    <button v-if="editItem" @click="toggleEdit">Cancel</button>
-                    <button v-else @click="deleteItem(item._id)">Delete</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -32,27 +13,34 @@
 
 <script setup>
 
-import ItemService from '../services/item.service';
+// import ItemService from '../services/item.service';
 import AddItem from '../components/AddItem.vue'
 import EditItem from '../components/EditItem.vue'
 
 import { ref, onMounted } from "vue"
+import { useItemStore } from '../stores/item';
+import { storeToRefs } from 'pinia';
 
-const allItems = ref(null)
+const { Items } = storeToRefs(useItemStore())
+
+const { fetchItems } = useItemStore()
+
+// const allItems = ref(null)
 
 onMounted(() => {
-    getAllItems()
+    fetchItems()
+    // getAllItems()
 })
 
-function getAllItems() {
-    ItemService.findAll()
-    .then(res => {
-        allItems.value = res.data.items;
-    })
-    .catch(err => {
-        console.log("getAllItems error: ", err);
-    })
-}
+// function getAllItems() {
+//     ItemService.findAll()
+//     .then(res => {
+//         allItems.value = res.data.items;
+//     })
+//     .catch(err => {
+//         console.log("getAllItems error: ", err);
+//     })
+// }
 </script>
 <style scoped>
 .dashboard {

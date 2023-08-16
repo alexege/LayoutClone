@@ -12,29 +12,36 @@
 <script setup>
 import ItemService from '../services/item.service.js';
 import { ref } from "vue";
+import { useItemStore } from '../stores/item';
+
+// const { fetchItems } = useItemStore()
+const { createItem } = useItemStore()
 
 const  item = ref ({
-                title: '',
-                url: '',
-                description: ''
-            });
+    title: '',
+    url: '',
+    description: ''
+});
 
 function addItem() {
     var data = {
-                title: item.value.title,
-                description: item.value.description
-            };
+            title: item.value.title,
+            url: item.value.url,
+            description: item.value.description
+        };
 
-            ItemService.addItem(data)
-            .then(res => {
-                item.value.title = '';
-                item.value.url = '';
-                item.value.description = '';
-                console.log("result of addItem: ", res);
-            })
-            .catch(err => {
-                console.log("AddItem.vue error:", err);
-            })
+        createItem(data);
+
+        ItemService.addItem(data)
+        .then(() => {
+            // fetchItems()
+            item.value.title = '';
+            item.value.url = '';
+            item.value.description = '';
+        })
+        .catch(err => {
+            console.log("AddItem.vue error:", err);
+        })
 }
 
 </script>

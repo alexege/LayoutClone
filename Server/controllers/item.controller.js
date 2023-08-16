@@ -13,19 +13,20 @@ exports.addItem = (req, res) => {
   item.save()
   .then(data => {
     console.log("Adding item to database: ", data.title);
-    this.findAllItems();
+    // this.findAllItems();
   })
   .catch(err => {
-    res.status(500).send({ message: err})
+    console.log("err:", err);
+    // res.status(500).send({ message: err})
   })
 };
 
 // Retrieve all Items from the database.
 exports.findAllItems = (req, res) => {
   Item.find()
-  .then((items) => {
-    res.send({ items });
-    console.log("Getting all Items from database");
+  .then(items => {
+    res.send(items);
+    console.log("Getting all Items from database:", items);
   })
   .catch(err => {
     console.log(err);
