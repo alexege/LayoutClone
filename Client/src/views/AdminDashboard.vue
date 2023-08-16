@@ -29,80 +29,29 @@
         </div>
     </div>
 </template>
-<script>
+
+<script setup>
+
 import ItemService from '../services/item.service';
 import AddItem from '../components/AddItem.vue'
 import EditItem from '../components/EditItem.vue'
 
-export default {
-    data() {
-        return {
-            allItems: null,
-            editItem: false,
+import { ref, onMounted } from "vue"
 
-            updatedItem: {
-                title: null,
-                url: null,
-                description: null
-            }
-        }
-    },
+const allItems = ref(null)
 
-    components: { AddItem, EditItem },
+onMounted(() => {
+    getAllItems()
+})
 
-    mounted() {
-        this.getAllItems();
-    },
-
-    methods: {
-        getAllItems() {
-            ItemService.findAll()
-            .then(res => {
-                console.log("res:", res);
-                this.allItems = res.data.items;
-            })
-            .catch(err => {
-                console.log("getAllItems error: ", err);
-            })
-        },
-
-        toggleEdit() {
-            this.editItem = !this.editItem;
-        },
-
-        updateItem(item) {
-            console.log("item is:", item);
-            let data = {
-                _id: item._id,
-                title: this.updatedItem.title,
-                url: this.updatedItem.url,
-                description: this.updatedItem.description
-            }
-            console.log("posting update with values:", data);
-            ItemService.update(data)
-            .then(res => {
-                console.log('update:', res);
-            })
-            .catch(err => {
-                console.log("error:", err);
-            })
-            .finally(() => {
-                this.editItem = false;
-            })
-            console.log("Updating item");
-        },
-
-        deleteItem(id){
-            console.log("item:", id);
-            ItemService.delete(id)
-            .then(res => {
-                console.log("Deleted item: ", res);
-            })
-            .catch(err => {
-                console.log("error deleteign item: ", err);
-            })
-        }
-    }
+function getAllItems() {
+    ItemService.findAll()
+    .then(res => {
+        allItems.value = res.data.items;
+    })
+    .catch(err => {
+        console.log("getAllItems error: ", err);
+    })
 }
 </script>
 <style scoped>

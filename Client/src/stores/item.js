@@ -18,7 +18,7 @@ export const useItemStore = defineStore({
       this.Items = []
       this.loading = true
       try {
-        this.Items = await fetch('http://127.0.0.1/api/items/all')
+        this.Items = await fetch('http://127.0.0.1:8081/api/items/all')
         .then((response) => response.json()) 
       } catch (error) {
         this.error = error

@@ -26,7 +26,6 @@ export default {
         getAllItems() {
             ItemService.findAll()
             .then(res => {
-                console.log("res:", res);
                 this.allItems = res.data;
             })
             .catch(err => {

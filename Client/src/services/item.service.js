@@ -18,9 +18,6 @@ class ItemService {
             url: item.url,
             description: item.description
         })
-        .then(res => {
-            console.log('results of update item.service:', res);
-        })
         .catch(err => {
             console.log('error:', err);
         })
@@ -28,9 +25,6 @@ class ItemService {
 
     delete(id) {
         return api.delete("/items/delete/" + id)
-        .then(res => {
-            console.log("res:", res);
-        })
         .catch(err => {
             console.log('err:', err);
         })
