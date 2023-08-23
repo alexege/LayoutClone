@@ -1,13 +1,21 @@
 import { defineStore } from 'pinia'
+import axios from "axios"
+
+const API_URL = 'http://localhost:8080/api'
 
 export const useItemStore = defineStore({
   id: 'Item',
   state: () => ({
-    Items: [],
-    Item: null,
+    items: [],
+    item: null,
     loading: false,
     error: null
   }),
+  getters: {
+    allItems: (state) => {
+        return state.items;
+    }
+  },
 //   getters: {
 //     getItemsPerAuthor: (state) => {
 //       return (authorId) => state.Items.filter((Item) => Item.userId === authorId)
@@ -15,41 +23,23 @@ export const useItemStore = defineStore({
 //   }, 
   actions: {
     async fetchItems() {
-      console.log("Attempting to fetch all items via pinia")
-      this.Items = []
-      this.loading = true
-      try {
-        this.Items = await fetch('http://127.0.0.1:8080/api/items/all')
-        .then((response) => response.json()) 
-      } catch (error) {
-        console.log("error in pinia:", error)
-        this.error = error
-      } finally {
-        this.loading = false
-      }
+        this.items = []
+        try {
+            let items = axios.get(`${API_URL}/items/all`)
+            this.items = (await items).data
+        } catch (error) {
+            console.log('error:', error)
+        } finally {
+            console.log("finally firing")
+        }
     },
 
-    createItem(item) {
-        this.Items.push({item})
-    },
-    //Not yet implemented
-    deleteItem(itemId) {
-        this.Items = this.Items.filter((object) => {
-            return object.id !== itemId;
-        });
+    async addItem(item){
+        console.log("item.js - addItem", item)
+        const response = await axios.post(`${API_URL}/items/addItem`, item)
+        this.items = response.data
+        await this.fetchItems()
+        .then("this.fetchItems firing")
     }
-
-    // async fetchItem(id) {
-    //   this.Item = null
-    //   this.loading = true
-    //   try {
-    //     this.Item = await fetch(`https://jsonplaceholder.typicode.com/Items/${id}`)
-    //     .then((response) => response.json())
-    //   } catch (error) {
-    //     this.error = error
-    //   } finally {
-    //     this.loading = false
-    //   }
-    // }
   }
 })

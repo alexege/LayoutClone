@@ -2,8 +2,9 @@
     <div class="dashboard">
         <h2>Admin Dashboard</h2>
         <AddItem/>
+
         <div class="items">
-            <div v-for="(item, idx) in Items" :key="item._id" class="block">
+            <div v-for="(item, idx) in items" :key="item._id" class="block">
                 <span>{{ idx + 1 }}</span>
                 <EditItem :item="item"/>
             </div>
@@ -12,35 +13,17 @@
 </template>
 
 <script setup>
-
-// import ItemService from '../services/item.service';
-import AddItem from '../components/AddItem.vue'
-import EditItem from '../components/EditItem.vue'
-
-import { ref, onMounted } from "vue"
-import { useItemStore } from '../stores/item';
+import AddItem from '../components/AddItem.vue';
+import EditItem from '../components/EditItem.vue';
 import { storeToRefs } from 'pinia';
+import { useItemStore } from '../stores/item'
 
-const { Items } = storeToRefs(useItemStore())
+const { items } = storeToRefs(useItemStore())
 
 const { fetchItems } = useItemStore()
 
-// const allItems = ref(null)
+fetchItems()
 
-onMounted(() => {
-    fetchItems()
-    // getAllItems()
-})
-
-// function getAllItems() {
-//     ItemService.findAll()
-//     .then(res => {
-//         allItems.value = res.data.items;
-//     })
-//     .catch(err => {
-//         console.log("getAllItems error: ", err);
-//     })
-// }
 </script>
 <style scoped>
 .dashboard {

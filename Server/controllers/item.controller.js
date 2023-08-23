@@ -1,26 +1,6 @@
 const db = require("../models");
 const Item = db.item;
 
-// Create and Save a new Item
-exports.addItem = (req, res) => {
-    console.log("Adding an item from controller:", req.body);
-  const item = new Item({
-    title: req.body.title,
-    url: req.body.url,
-    description: req.body.description
-  });
-
-  item.save()
-  .then(data => {
-    console.log("Adding item to database: ", data.title);
-    // this.findAllItems();
-  })
-  .catch(err => {
-    console.log("err:", err);
-    // res.status(500).send({ message: err})
-  })
-};
-
 // Retrieve all Items from the database.
 exports.findAllItems = (req, res) => {
   Item.find()
@@ -34,6 +14,30 @@ exports.findAllItems = (req, res) => {
 
 //   .sort([["createdAt", "descending"]]);
 };
+
+// Create and Save a new Item
+exports.addItem = (req, res) => {
+    console.log("Adding an item from controller:", req.body);
+  
+  const item = new Item({
+    title: req.body.title,
+    url: req.body.url,
+    description: req.body.description
+  });
+
+  item.save(item)
+  .then(data => {
+    console.log("Adding item to database: ", data.title);
+    res.send(data)
+    // this.findAllItems();
+  })
+  .catch(err => {
+    console.log("err:", err);
+    // res.status(500).send({ message: err})
+  })
+};
+
+
 
 // Find a single Item with an id
 exports.findOne = (req, res) => {
