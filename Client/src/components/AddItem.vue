@@ -11,13 +11,10 @@
 
 <script setup>
 
-// import ItemService from '../services/item.service.js';
 import { ref } from "vue";
 import { useItemStore } from '../stores/item';
 
-// const { fetchItems } = useItemStore()
 const { addItem } = useItemStore()
-
 const  item = ref ({
     title: '',
     url: '',
@@ -30,36 +27,14 @@ async function add() {
         url: item.value.url,
         description: item.value.description
     }
-    console.log("AddItem.vue - add() / addItem(data)", data)
+
     await addItem(data)
+    .then(() => {
+        item.value.title = '';
+        item.value.url = '';
+        item.value.description = '';
+    })
 }
-
-// async function addItem() {
-//     const itemStore = useItemStore();
-//     await itemStore.createItem({ title: item.value.title, url: item.value.url, description: item.value.description })
-// }
-
-// async function addItem() {
-    
-//     var data = {
-//             title: item.value.title,
-//             url: item.value.url,
-//             description: item.value.description
-//         };
-        
-//     await createItem(data)
-
-//         // ItemService.addItem(data)
-//         // .then(() => {
-//         //     // fetchItems()
-//         //     item.value.title = '';
-//         //     item.value.url = '';
-//         //     item.value.description = '';
-//         // })
-//         // .catch(err => {
-//         //     console.log("AddItem.vue error:", err);
-//         // })
-// }
 
 </script>
 <style>

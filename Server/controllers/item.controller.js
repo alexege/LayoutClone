@@ -6,7 +6,6 @@ exports.findAllItems = (req, res) => {
   Item.find()
   .then(items => {
     res.send(items);
-    console.log("Getting all Items from database:", items);
   })
   .catch(err => {
     console.log(err);
@@ -17,7 +16,6 @@ exports.findAllItems = (req, res) => {
 
 // Create and Save a new Item
 exports.addItem = (req, res) => {
-    console.log("Adding an item from controller:", req.body);
   
   const item = new Item({
     title: req.body.title,
@@ -27,17 +25,12 @@ exports.addItem = (req, res) => {
 
   item.save(item)
   .then(data => {
-    console.log("Adding item to database: ", data.title);
     res.send(data)
-    // this.findAllItems();
   })
   .catch(err => {
     console.log("err:", err);
-    // res.status(500).send({ message: err})
   })
 };
-
-
 
 // Find a single Item with an id
 exports.findOne = (req, res) => {

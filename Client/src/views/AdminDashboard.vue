@@ -19,7 +19,6 @@ import { storeToRefs } from 'pinia';
 import { useItemStore } from '../stores/item'
 
 const { items } = storeToRefs(useItemStore())
-
 const { fetchItems } = useItemStore()
 
 fetchItems()
