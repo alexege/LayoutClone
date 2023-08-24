@@ -1,10 +1,19 @@
 <template>
     <div>
         <div class="items">
-            <div v-for="n in 126" :key="n">
-                <div class="block"></div>
+            <div v-for="item in allItems" :key="item.id">
+                <div class="block">
+                    <img :src="item.url ? item.url : 'https://www.nbmchealth.com/wp-content/uploads/2018/04/default-placeholder.png'" :alt="item.title">
+                </div>
             </div>
         </div>
+        <!-- <div class="items">
+            <div v-for="n in 126" :key="n">
+                <div class="block">
+                    <img src="" alt="">
+                </div>
+            </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -72,5 +81,9 @@ export default {
     box-shadow: 1px 1px 20px 5px rgba(255, 255, 255, 0.205);
     /* border-top: 1px solid white;
     border-left: 1px solid white; */
+}
+
+.block img {
+    aspect-ratio: 1;
 }
 </style>

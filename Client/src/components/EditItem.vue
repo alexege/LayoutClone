@@ -3,15 +3,15 @@
         <div class="edit-container">
             <template v-if="editing">
                 <input type="text" v-model="updatedItem.title">
-                <img :src="'https://source.unsplash.com/random/100x100?sig=100'" alt="" class="block-image">
+                <img :src="updatedItem.url" alt="" class="block-image">
                 <input type="text" v-model="updatedItem.url">
-                <textarea name="" id="" cols="10" rows="10" v-model="updatedItem.description"></textarea>
+                <textarea v-model="updatedItem.description"></textarea>
             </template>
 
             <template v-else>
                 <h2>{{ updatedItem.title }}</h2>
-                <img :src="'https://source.unsplash.com/random/100x100?sig=100'" alt="" class="block-image">
-                <span>{{ updatedItem.url }}</span>
+                <img :src="updatedItem.url" alt="" class="block-image">
+                <!-- <span class="url">{{ updatedItem.url }}</span> -->
                 <p>{{ updatedItem.description }}</p>
             </template>
 
@@ -77,7 +77,24 @@ function deleteItem(id) {
     .edit-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    }
+
+    .block-image {
+        aspect-ratio: 1;
+        margin: 0 auto;
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .action-buttons {
+        padding: 10px;
+    }
+
+    .action-buttons button {
+        width: 50%;
+    }
+    
+    .url {
+        overflow: hidden;
     }
 </style>

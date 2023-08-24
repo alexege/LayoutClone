@@ -30,9 +30,9 @@ async function add() {
 
     await addItem(data)
     .then(() => {
-        item.value.title = '';
-        item.value.url = '';
-        item.value.description = '';
+        // item.value.title = '';
+        // item.value.url = '';
+        // item.value.description = '';
     })
 }
 
