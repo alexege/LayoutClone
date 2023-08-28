@@ -1,6 +1,8 @@
 <template>
     <div>
         <div class="edit-container">
+
+            <!-- Edit Mode Active -->
             <template v-if="editing">
                 <input type="text" v-model="updatedItem.title">
                 <img :src="updatedItem.url" alt="" class="block-image">
@@ -8,11 +10,13 @@
                 <textarea v-model="updatedItem.description"></textarea>
             </template>
 
+            <!-- Default View -->
             <template v-else>
                 <h2>{{ updatedItem.title }}</h2>
                 <img :src="updatedItem.url" alt="" class="block-image">
                 <!-- <span class="url">{{ updatedItem.url }}</span> -->
                 <p>{{ updatedItem.description }}</p>
+                <p>{{ updatedItem.gridPosition }}</p>
             </template>
 
             <div class="action-buttons">
@@ -39,7 +43,8 @@ const updatedItem = ref({
     _id: props.item._id,
     title: props.item.title,
     url: props.item.url,
-    description: props.item.description
+    description: props.item.description,
+    gridPosition: props.item.gridPosition
 })
 
 function toggleEdit() {
@@ -51,7 +56,8 @@ function updateItem(item) {
         _id: item._id,
         title: updatedItem.value.title,
         url: updatedItem.value.url,
-        description: updatedItem.value.description
+        description: updatedItem.value.description,
+        gridPosition: updatedItem.value.gridPosition
     }
     ItemService.update(data)
     .catch(error => {
@@ -92,6 +98,11 @@ function deleteItem(id) {
 
     .action-buttons button {
         width: 50%;
+    }
+
+    .action-buttons button:hover {
+        background-color: #45906C;
+        color: white;
     }
     
     .url {

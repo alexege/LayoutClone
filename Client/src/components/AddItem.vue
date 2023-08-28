@@ -18,14 +18,16 @@ const { addItem } = useItemStore()
 const  item = ref ({
     title: '',
     url: '',
-    description: ''
+    description: '',
+    gridPosition: null
 });
 
 async function add() {
     var data = {
         title: item.value.title,
         url: item.value.url,
-        description: item.value.description
+        description: item.value.description,
+        gridPosition: item.value.gridPosition
     }
 
     await addItem(data)

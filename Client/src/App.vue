@@ -7,7 +7,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <header class="navbar">
      <div>
        <nav>
-         <RouterLink to="/">Home</RouterLink> - 
+         <RouterLink to="/">Home</RouterLink> -
          <RouterLink to="/posts">Posts</RouterLink> - 
          <RouterLink to="/authors">Authors</RouterLink> - 
          <RouterLink to="/admin">Admin</RouterLink>
@@ -21,7 +21,13 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style>
   .navbar {
-    background-color: lightgreen;
+    background-color: #45906C;
     padding: 1.2rem;
+    border-radius: 5px;
+  }
+
+  .navbar a {
+    color: white;
+    text-decoration: none;
   }
 </style>

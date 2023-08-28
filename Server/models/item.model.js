@@ -5,7 +5,8 @@ const Item = mongoose.model(
     new mongoose.Schema({
         title: String,
         url: String,
-        description: String
+        description: String,
+        gridPosition: Number
     },
     { timestamps: true})
 )

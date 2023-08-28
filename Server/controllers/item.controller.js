@@ -4,32 +4,55 @@ const Item = db.item;
 // Retrieve all Items from the database.
 exports.findAllItems = (req, res) => {
   Item.find()
+  .sort([["gridPosition", "ascending"]])
   .then(items => {
     res.send(items);
   })
   .catch(err => {
     console.log(err);
   })
-
-//   .sort([["createdAt", "descending"]]);
+  
+  // .sort([["createdAt", "descending"]])
 };
 
 // Create and Save a new Item
 exports.addItem = (req, res) => {
-  
-  const item = new Item({
-    title: req.body.title,
-    url: req.body.url,
-    description: req.body.description
-  });
 
-  item.save(item)
-  .then(data => {
-    res.send(data)
+  Item.find().then((items) => {
+    console.log("items:", items.length);
+    const item = new Item({
+      title: req.body.title,
+      url: req.body.url,
+      description: req.body.description,
+      gridPosition: items.length
+    });
+
+    console.log("item:", item);
+  
+    item.save(item)
+    .then(data => {
+      console.log("saveItem:", data)
+      res.send(data)
+    })
+    .catch(err => {
+      console.log("err:", err);
+    })
   })
-  .catch(err => {
-    console.log("err:", err);
-  })
+
+  // const item = new Item({
+  //   title: req.body.title,
+  //   url: req.body.url,
+  //   description: req.body.description,
+  //   // gridPosition: count + 1
+  // });
+
+  // item.save(item)
+  // .then(data => {
+  //   res.send(data)
+  // })
+  // .catch(err => {
+  //   console.log("err:", err);
+  // })
 };
 
 // Find a single Item with an id
@@ -51,7 +74,8 @@ exports.update = (req, res) => {
   let updateData = {
     title: req.body.title,
     url: req.body.url,
-    description: req.body.description
+    description: req.body.description,
+    gridPosition: req.body.gridPosition
   };
 
   Item.findByIdAndUpdate({ _id: req.params.id }, updateData)

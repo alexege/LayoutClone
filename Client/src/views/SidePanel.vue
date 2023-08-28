@@ -10,25 +10,23 @@
                     +
                 </button>
             </div>
-            
-            <div class="items">
-                <span v-for="item in items" :key="item" class="item">
-                    <!-- <img :src="'https://source.unsplash.com/random/20x20?sig=' + item" alt=""> -->
-                    <span class="layout-title"> - Layout Name</span>
-                </span>
-            </div>
+            <AddEditLayout v-for="layout in layouts" :key="layout.id"/>
         </div>
     </div>
 </template>
 <script>
+import AddEditLayout from '../components/AddEditLayout.vue'
+
 export default {
+    components: { AddEditLayout },
     data() {
         return {
             items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             item: {
                 title: null,
                 description: 'Default description'
-            }
+            },
+            layouts: [1, 2, 3, 4, 5, 6]
         }
     }
 }
@@ -67,23 +65,5 @@ export default {
         width: 25%;
         padding: 1em;
         margin: 0.25em;
-    }
-
-    .item {
-        display: flex;
-        padding: 1em;
-        margin: 0.25em;
-        width: 100%;
-        background-color: rgb(63, 63, 63)
-    }
-
-    .items {
-        display: flex;
-        margin: .25em;
-        flex-direction: column;
-    }
-
-    .layout-title {
-        padding: 0.5em;
     }
 </style>

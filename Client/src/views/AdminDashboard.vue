@@ -5,9 +5,11 @@
         <AddItem class="add-item"/>
 
         <div class="item-grid">
-            <div v-for="(item, idx) in items" :key="item._id" class="item">
+            <div v-for="(item, idx) in items" :key="item.id" class="cell">
+            <div class="item">
                 <span>{{ idx + 1 }}</span>
                 <EditItem :item="item"/>
+            </div>
             </div>
         </div>
     </div>
@@ -43,10 +45,16 @@ fetchItems()
 .item {
   display: flex;
   flex-direction: column;
-  outline: 2px solid yellow;
+  outline: 2px solid #45906C;
   border-radius: 3px;
   color: #FFF;
   background-color: rgb(63, 63, 63);
   font-size: 8pt;
 }
+
+/* .cell {
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+} */
 </style>

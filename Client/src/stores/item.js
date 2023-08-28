@@ -30,6 +30,11 @@ export const useItemStore = defineStore({
     async addItem(item){
         await axios.post(`${API_URL}/items/addItem`, item)
         await this.fetchItems()
+    },
+
+    async updateItem(item) {
+      await axios.post(`${API_URL}/items/update/${item._id}`)
+      await this.fetchItems()
     }
   }
 })
