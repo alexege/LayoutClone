@@ -41,19 +41,18 @@ export const useItemStore = defineStore({
       try {
         const all_items = await this.fetchItems()
         console.log("all:", all_items);
-      } catch (e) {
-        console.log("e:", e);
+      } catch (error) {
+        console.log("error:", error);
       }
-      // this.items = all_items.data;
     },
 
     async update(item) {
-      console.log("updating an item: ", item);
-      const res = await axios.patch(`${API_URL}/items/update/${item._id}`)
-      console.log("res:", res);
-      const all_items = await this.fetchItems()
-      console.log("all_items:", all_items);
-      // this.items = all_items.data;
+      try {
+        await axios.patch(`${API_URL}/items/update/${item._id}`)
+        await this.fetchItems()
+      } catch (error) {
+        console.log("error:", error);
+      }
     }
   }
 })

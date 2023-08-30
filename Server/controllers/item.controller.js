@@ -20,9 +20,18 @@ exports.addItem = (req, res) => {
 
   Item.find().then((items) => {
     console.log("items:", items.length);
+
+    let url_link = null;
+    let seed = Math.floor(Math.random() * 900);
+    if(req.body.url){
+      url_link = req.body.url
+    } else {
+      url_link = `https://picsum.photos/id/${seed}/200/300`
+    }
+
     const item = new Item({
       title: req.body.title,
-      url: req.body.url,
+      url: url_link,
       description: req.body.description,
       gridPosition: items.length
     });

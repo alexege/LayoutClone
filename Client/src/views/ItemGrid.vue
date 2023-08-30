@@ -14,8 +14,8 @@
             <div v-for="(item, idx) in allItems" :key="item.id">
                 <div class="block-cell" @drop="onDrop($event, item)" @dragover.prevent @dragenter.prevent>
                     <div class="block" draggable @dragstart="onDrag($event, item)">
-                        {{ item._id.slice(-3) }}
-                        <pre>{{ idx }} : {{ item.gridPosition }}</pre>
+                        <!-- {{ item._id.slice(-3) }} -->
+                        <!-- <pre>{{ idx }} : {{ item.gridPosition }}</pre> -->
                         <img :src="item.url ? item.url : 'https://www.nbmchealth.com/wp-content/uploads/2018/04/default-placeholder.png'" :alt="item.title">
                     </div>
                 </div>
@@ -32,7 +32,7 @@
 </template>
 <script setup>
 
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { storeToRefs } from 'pinia';
 import { useItemStore } from '../stores/item';
 
@@ -42,13 +42,13 @@ const { allItems } = storeToRefs(useItemStore())
 const drag_source = ref(null)
 const drag_target = ref(null)
 const drag_target_holder = ref(null);
+const drag_source_placeholder = ref(null);
 
 fetchItems()
 
-// const getAllItems = computed(() => allItems);
-
 async function onDrag(evt, item) {
     drag_source.value = item;
+    drag_source_placeholder.value = item.gridPosition;
     evt.dataTransfer.dropEffect = 'move'
     evt.dataTransfer.effectAllowed = 'move'
     evt.dataTransfer.setData('itemID', item._id)
@@ -67,9 +67,6 @@ async function onDrop(evt, item) {
         _id: this.drag_source._id,
         gridPosition: this.drag_target_holder.gridPosition
     }
-
-    console.log(`Swapping :${data_source._id}\n with ${data_target._id}`);
-    console.log(`Swapping :${data_source.gridPosition}\n with ${drag_target_holder.value.gridPosition}`);
 
     try {
         await updateItem(data_target)
