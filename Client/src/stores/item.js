@@ -19,12 +19,14 @@ export const useItemStore = defineStore({
   actions: {
     async fetchItems() {
         this.items = []
-        try {
-            let items = axios.get(`${API_URL}/items/all`)
-            this.items = (await items).data
-        } catch (error) {
-            console.log('error:', error)
-        }
+        const response = await axios.get(`${API_URL}/items/all`)
+        this.items = response.data;
+        // try {
+        //     let items = axios.get(`${API_URL}/items/all`)
+        //     this.items = (await items).data
+        // } catch (error) {
+        //     console.log('error:', error)
+        // }
     },
 
     async addItem(item){
@@ -33,8 +35,25 @@ export const useItemStore = defineStore({
     },
 
     async updateItem(item) {
-      await axios.post(`${API_URL}/items/update/${item._id}`)
-      await this.fetchItems()
+      console.log("updating an item: ", item);
+      const items = await axios.patch(`${API_URL}/items/update/${item._id}`, item)
+      console.log("items:", items);
+      try {
+        const all_items = await this.fetchItems()
+        console.log("all:", all_items);
+      } catch (e) {
+        console.log("e:", e);
+      }
+      // this.items = all_items.data;
+    },
+
+    async update(item) {
+      console.log("updating an item: ", item);
+      const res = await axios.patch(`${API_URL}/items/update/${item._id}`)
+      console.log("res:", res);
+      const all_items = await this.fetchItems()
+      console.log("all_items:", all_items);
+      // this.items = all_items.data;
     }
   }
 })

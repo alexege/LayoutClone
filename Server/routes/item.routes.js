@@ -14,7 +14,7 @@ module.exports = (app) => {
     app.post("/api/items/addItem", controller.addItem);
 
     //:id is the param that is passed and will be later accessed with req.params.id
-    app.post("/api/items/update/:id", controller.update);
+    app.patch("/api/items/update/:id", controller.update);
 
     app.delete("/api/items/delete/:id", controller.delete);
 }

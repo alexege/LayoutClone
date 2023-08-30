@@ -15,7 +15,7 @@ class ItemService {
 
     update(item) {
         console.log("updating item ----------:", item)
-        return api.post("/items/update/" + item._id, {
+        return api.patch("/items/update/" + item._id, {
             title: item.title,
             url: item.url,
             description: item.description,
