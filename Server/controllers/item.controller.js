@@ -21,18 +21,19 @@ exports.addItem = (req, res) => {
   Item.find().then((items) => {
     console.log("items:", items.length);
 
+    //If no image is provided, generate a random one
     let url_link = null;
-    let seed = Math.floor(Math.random() * 900);
+    let seed = Math.floor(Math.random() * 400);
     if(req.body.url){
       url_link = req.body.url
     } else {
-      url_link = `https://picsum.photos/id/${seed}/200/300`
+      url_link = `https://picsum.photos/id/${seed}/300/300`
     }
 
     const item = new Item({
-      title: req.body.title,
+      title: req.body.title || "Default Title",
       url: url_link,
-      description: req.body.description,
+      description: req.body.description || "Default Description",
       gridPosition: items.length
     });
 
@@ -89,7 +90,6 @@ exports.update = (req, res) => {
 
   Item.findByIdAndUpdate({ _id: req.params.id }, updateData)
   .then(item => {
-    console.log("item found:", item);
     res.status(200).send({ item });
   })
   .catch(err => {

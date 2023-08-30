@@ -7,20 +7,50 @@
             </div>
             <div class="search">
                 <h4>Search</h4>
-                <input type="text" class="search-bar">
+                <input type="text" class="search-bar" v-model="input">
             </div>
             <div class="search-items">
-                <div class="block" v-for="n in 190" :key="n">
-                    <span style="color: black;">
-                        {{  n  }}
-                    </span>
-                    <!-- <img :src="'https://source.unsplash.com/random/200x200?sig=' + n" alt=""> -->
+                <div class="block" v-for="item in filteredList()" :key="item">
+                    <div style="color: black;" draggable @dragstart="onDrag($event, item)">
+                        <img :src="item.url" alt="" style="width: 100%; height: 100%;">
+                    </div>
+                </div>
+                <div v-if="input&&!filteredList().length">
+                    <p>No results found!</p>
                 </div>
             </div>
         </div>
     </div>
 </template>
-<script>
+<script setup>
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useItemStore } from "../stores/item";
+const input = ref("");
+const { fetchItems } = useItemStore()
+fetchItems()
+
+const { allItems } = storeToRefs(useItemStore())
+
+function filteredList() {
+    return allItems.value.filter((item) => {
+        if(typeof(item) == 'object'){
+            for(const [key, value] of Object.entries(item)) {
+                if (value.toString().toLowerCase().includes(input.value.toLowerCase())) {
+                    return item;
+                }
+            }
+        }
+    })
+}
+
+async function onDrag(evt, item) {
+    useItemStore.currentItem = item;
+    evt.dataTransfer.dropEffect = 'copy';
+    evt.dataTransfer.effectAllowed = 'copy';
+    evt.dataTransfer.setData('itemID', item._id);
+}
+
 </script>
 <style scoped>
 

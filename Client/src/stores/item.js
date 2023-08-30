@@ -8,6 +8,7 @@ export const useItemStore = defineStore({
   state: () => ({
     items: [],
     item: null,
+    currentItem: null,
     loading: false,
     error: null
   }),
@@ -35,12 +36,9 @@ export const useItemStore = defineStore({
     },
 
     async updateItem(item) {
-      console.log("updating an item: ", item);
-      const items = await axios.patch(`${API_URL}/items/update/${item._id}`, item)
-      console.log("items:", items);
       try {
-        const all_items = await this.fetchItems()
-        console.log("all:", all_items);
+        await axios.patch(`${API_URL}/items/update/${item._id}`, item)
+        await this.fetchItems()
       } catch (error) {
         console.log("error:", error);
       }
