@@ -2,7 +2,7 @@
     <div>
         <div class="items">
             <div v-for="(item, idx) in allItems" :key="item.id">
-                <div class="block-cell" @drop="onDrop($event, item)" @dragover.prevent @dragenter.prevent>
+                <div class="block-cell" @drop="onDrop($event, item)" @dragover.prevent @dragenter.prevent @contextmenu="rightClickClear($event, item)">
                     <div class="block" draggable @dragstart="onDrag($event, item)">
                         <!-- {{ item._id.slice(-3) }} -->
                         <!-- <pre>{{ idx }} : {{ item.gridPosition }}</pre> -->
@@ -68,8 +68,17 @@ async function onDrop(evt, item) {
             console.log("error:", error)
         }
     }
+}
 
-
+async function rightClickClear(evt, item) {
+    evt.preventDefault();
+    let clear_item = {
+        _id: item._id,
+        url: null,
+        title: null,
+        description: null,
+    };
+    await updateItem(clear_item);
 }
 
 </script>

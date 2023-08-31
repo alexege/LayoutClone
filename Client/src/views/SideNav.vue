@@ -97,8 +97,10 @@ async function onDrag(evt, item) {
         min-height: 30px;
         aspect-ratio: 1;
         border-radius: 3px;
-        padding: .25em;
-        margin: .25em;
+        /* padding: .25em; */
+        /* margin: .25em; */
+        padding: 2px;
+        margin: 2px;
         text-align: center;
         display: flex;
         flex-direction: column;

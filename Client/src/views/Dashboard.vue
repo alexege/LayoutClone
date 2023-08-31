@@ -27,7 +27,7 @@ import ItemGrid from "./ItemGrid.vue"
 
 .container {
   display: grid;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 25% 50% 25%;
   grid-template-rows: auto;
   /* outline: 1px solid red; */
 }
