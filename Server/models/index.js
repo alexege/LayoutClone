@@ -8,5 +8,6 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.item = require("./item.model");
+db.layout = require("./layout.model");
 
 module.exports = db;
